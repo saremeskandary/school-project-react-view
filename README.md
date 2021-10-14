@@ -9,10 +9,8 @@ How it work? Upload your certification in our website and sign It with your key.
 In the following, I will explain the main actions that each of them can do in the application:
 
 *	As a `person`, I can create name, title, and add additional documents in IPFS and sign it with my key.
-
-*	As a `school`, I have a name and website
-*	As a `school`, I need to find my student and verify that student is my student
+*	As a `school`, I have a name and website.
+*	As a `school`, I need to find my student and verify that student.
 *	As a `school`, I can write the scores in a universal framework that every school should use that. And I can Implement the IPFS signature in it.
-
-*	As a `school`, I can create a total
-*	As a `company`, I can read the school documents about its student
+*	As a `school`, I can create a totalScore+subjectName.
+*	As a `company`, I can read the school documents about its student.
