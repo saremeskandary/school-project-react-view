@@ -15,6 +15,8 @@ In the following, I will explain the main actions that each of them can do in th
 *	As a `school`, I can create a **totalScore+subjectName**.
 *	As a `company`, I can read the school documents about its student.
 
+person can have multiple school and school can have multiple person, so it is a many to many relationship.
+you can see more about relations in solidity in [this article](https://medium.com/robhitchens/enforcing-referential-integrity-in-ethereum-smart-contracts-a9ab1427ff42).
 
 ## app defition
 
@@ -28,7 +30,8 @@ In the following, I will explain the main actions that each of them can do in th
     2. get
     3. update
     4. remove
-
+   
+----
 ### certification
 
     1. school should add person to the school list
@@ -40,9 +43,9 @@ In the following, I will explain the main actions that each of them can do in th
 
 #### modifire 
     1. onlySchool
-    2. onlyPerson
+    2. onlyIfPersonAllow
 
 #### methods
     1. create -> onlySchool
-    2. get -> onlyPerson
-        1.  
+    2. get -> if readable false then onlyIfPersonAllow
+

@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.9 <0.9.0;
 
+// TODO add NatSpec for every parameters like below
+/// @title 
+/// @author 
+/// @notice 
+/// @dev 
 contract Users {    
     address public owner;
 
@@ -8,7 +13,7 @@ contract Users {
     
     enum User {
         school,
-        Person
+        person
     }
 
     struct Item {
@@ -18,6 +23,10 @@ contract Users {
         User user;
     }
     Item[] public items;
+
+    // constructor (type name) public {
+        
+    // }
 
     function create(User _user, string memory _name, string memory _additionalInfol)
         public
