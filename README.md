@@ -28,8 +28,7 @@ you can see more about relations in solidity in [this article](https://medium.co
 #### methods
     1. create
     2. get
-    3. update
-    4. remove
+    3. remove
    
 ----
 ### certification

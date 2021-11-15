@@ -8,9 +8,7 @@ pragma solidity >=0.8.9 <0.9.0;
 /// @dev 
 contract Users {    
     address public owner;
-
-    uint public skuCount;
-    
+        
     enum User {
         school,
         person
