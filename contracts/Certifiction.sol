@@ -9,10 +9,6 @@ pragma solidity ^0.8.9;
 /// @notice
 /// @dev
 contract Certification {
-    ////////////////////   State variables   ////////////////////
-    address public owner;
-    uint256 public schoolCount;
-    uint256 public studentCount;
     ////////////////////   events     ////////////////////
     // event personAdded(User user);
     event studentCreated(
@@ -48,12 +44,12 @@ contract Certification {
         string IPFShash; // additional info
     }
 
-    mapping(address => Student) public studentStruct;
+    mapping(address => Student) public studentListtruct;
     address[] public studentList;
 
     struct Course {
-        address[] students;
-        uint256 certificatePointer;
+        uint256 coursePointer;
+        address studentID;
         address schoolID;
         string courseName;
         string IPFShash; // additional info
@@ -74,14 +70,6 @@ contract Certification {
     bytes32[] public certificateList;
 
     ////////////////////   modifiers  ////////////////////
-    modifier isOwner() {
-        require(msg.sender == owner, "Must be the owner to call this function");
-        _;
-    }
-    modifier verifyCaller(address _address) {
-        require(msg.sender == _address, "Unrecognized caller");
-        _;
-    }
     modifier isSchool(address _schoolOwner) {
         require(
             msg.sender == schoolStruct[_schoolOwner].schoolOwner,
@@ -96,17 +84,17 @@ contract Certification {
     //     _;
     // }
 
-    constructor() {}
-
     /// @dev school should add student to the school list
     function createStudent(string memory _name, string memory _IPFShash)
         public
         returns (bool success)
     {
         studentList.push(msg.sender);
-        studentStruct[msg.sender].certificatePointer = studentList.length - 1;
-        studentStruct[msg.sender].name = _name;
-        studentStruct[msg.sender].IPFShash = _IPFShash;
+        studentListtruct[msg.sender].certificatePointer =
+            studentList.length -
+            1;
+        studentListtruct[msg.sender].name = _name;
+        studentListtruct[msg.sender].IPFShash = _IPFShash;
 
         emit studentCreated(msg.sender, _name, _IPFShash);
         return (true);
@@ -126,12 +114,21 @@ contract Certification {
         return (true);
     }
 
-    function createCourse(string memory _name)
-        public
-        isSchool(msg.sender)
-        returns (bool success)
-    {
-        
+    function createCourse(
+        bytes32 _ID,
+        address _student,
+        string memory _courseName,
+        string memory _IPFShash
+    ) public isSchool(msg.sender) returns (bool success) {
+        courseList.push(_ID);
+        courseStruct[_ID].coursePointer = courseList.length - 1;
+        courseStruct[_ID].studentID = _student;
+        courseStruct[_ID].schoolID = msg.sender;
+        courseStruct[_ID].courseName = _courseName;
+        courseStruct[_ID].IPFShash = _IPFShash;
+
+        emit certificateCreated(_courseName);
+        return (true);
     }
 
     function createCertificate(
@@ -175,10 +172,29 @@ contract Certification {
             string memory IPFShash
         )
     {
-        certificatePointer = studentStruct[_studentAddress].certificatePointer;
-        name = studentStruct[_studentAddress].name;
-        IPFShash = studentStruct[_studentAddress].IPFShash;
+        certificatePointer = studentListtruct[_studentAddress]
+            .certificatePointer;
+        name = studentListtruct[_studentAddress].name;
+        IPFShash = studentListtruct[_studentAddress].IPFShash;
         return (certificatePointer, name, IPFShash);
+    }
+
+    function fetchCourse(bytes32 _course)
+        public
+        view
+        returns (
+            uint256 coursePointer,
+            address studentID,
+            address schoolID,
+            string memory courseName,
+            string memory IPFShash // additional info
+        )
+    {
+        coursePointer = courseStruct[_course].coursePointer;
+        schoolID = courseStruct[_course].schoolID;
+        courseName = courseStruct[_course].courseName;
+        IPFShash = courseStruct[_course].IPFShash;
+        return (coursePointer, studentID, schoolID, courseName, IPFShash);
     }
 
     function fetchCertificate(bytes32 _certificate)
@@ -194,26 +210,8 @@ contract Certification {
     {
         certificatePointer = certificateStruct[_certificate].certificatePointer;
         studentID = certificateStruct[_certificate].studentID;
-        schoolID = certificateStruct[_certificate].schoolID;   
+        schoolID = certificateStruct[_certificate].schoolID;
         courseName = certificateStruct[_certificate].courseName;
         return (certificatePointer, studentID, schoolID, courseID, courseName);
     }
 }
-    // TODO fix this
-    // function fetchCourse(bytes32 _course)
-    //     public
-    //     view
-    //     returns (
-    //         address students,
-    //         uint256 certificatePointer,
-    //         address schoolID,
-    //         string memory courseName,
-    //         string memory IPFShash // additional info
-    //     )
-    // {
-    //     students = courseStruct[_course].students;
-    //     certificatePointer = courseStruct[_course].certificatePointer;
-    //     schoolID = courseStruct[_course].schoolID;
-    //     courseName = courseStruct[_course].courseName;
-    //     IPFShash = courseStruct[_course].IPFShash;
-    // }

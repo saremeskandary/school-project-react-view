@@ -30,7 +30,7 @@ contract("Certification", accounts => {
     })
   })
 
-  // variablesAndStructsTest()
+  StructsTest()
 
   describe('functions', () => {
     describe('student fuctions', () => {
@@ -71,26 +71,26 @@ contract("Certification", accounts => {
       })
     })
 
-    // describe('course functions', () => {
-    //   it('should add a schoolID, courseName, IPFShash', async () => {
-    //     await instance.createCourse(nameCourse, IPFShashCourse, {from: school});
+    describe('course functions', () => {
+      it('should add a schoolID, courseName, IPFShash', async () => {
+        await instance.createCourse(nameCourse, IPFShashCourse, {from: school});
 
-    //     const result = await instance.fetchCourse.call(school)
+        const result = await instance.fetchCourse.call(school)
         
-    //     assert.equal(
-    //       result[1], nameCourse,
-    //       "the name of the last added school does not match the expected value"
-    //     )
-    //     assert.equal(
-    //       result[2], IPFShashCourse,
-    //       "the IPFShash of the last added school does not match the expected value"
-    //       )
-    //     assert.equal(
-    //       result[3], school,
-    //       "the schoolOwner of the last added school does not match the expected value"
-    //     )
-    //   })
-    // })
+        assert.equal(
+          result[1], nameCourse,
+          "the name of the last added school does not match the expected value"
+        )
+        assert.equal(
+          result[2], IPFShashCourse,
+          "the IPFShash of the last added school does not match the expected value"
+          )
+        assert.equal(
+          result[3], school,
+          "the schoolOwner of the last added school does not match the expected value"
+        )
+      })
+    })
     
     describe('certificate functions', () => {
       it('should add a schoolID, studentID, courseName, id', async () => {
@@ -115,21 +115,7 @@ contract("Certification", accounts => {
   })
 });
 
-function variablesAndStructsTest() {
-  describe('variables', () => {
-    it("have an owner", async () => {
-      assert.equal(typeof instance.owner, 'function', "the contract has no owner");
-    });
-
-    it("have an schoolCount", async () => {
-      assert.equal(typeof instance.schoolCount, 'function', "the contract has no schoolCount");
-    });
-
-    it("have an studentCount", async () => {
-      assert.equal(typeof instance.studentCount, 'function', "the contract has no studentCount");
-    });
-  })
-
+function StructsTest() {
   describe('structs', () => {
     describe('Course Struct', () => {
       let School
@@ -198,8 +184,8 @@ function variablesAndStructsTest() {
         )
       })
 
-      // it('this is a test for students', async () => {
-      //   isDefinedAndType(Course)("students")("address")
+      // it('this is a test for studentList', async () => {
+      //   isDefinedAndType(Course)("studentList")("address")
       // })
 
       it('this is a test for certificatePointer', async () => {
