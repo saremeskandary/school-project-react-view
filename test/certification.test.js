@@ -11,8 +11,8 @@ contract("Certification", accounts => {
   const nameSchool = "Sahar School";
   const nameAli = "ali";
   const nameCertificate = "first year";
-  const IPFShashSchool = "Sahar Image"
-  const IPFShashAli = "Sahar Image"
+  const IPFShashSchool = "Sahar Image";
+  const IPFShashAli = "Sahar Image";
 
   let instance;
 
@@ -35,7 +35,7 @@ contract("Certification", accounts => {
   describe('functions', () => {
     describe('student fuctions', () => {
       it('should add a student with name and IPFShash', async () => {
-        await instance.createStudent(nameAli, IPFShashAli, {from: ali});
+        await instance.createStudent(  {from: ali});
 
         const result = await instance.fetchStudent.call(ali)
         
