@@ -3,10 +3,12 @@ import Web3 from 'web3';
 import w3utils from 'web3-utils'
 import { networks, abi } from "./contracts/Certification.json";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Nav, Container, Form, Button, FloatingLabel } from 'react-bootstrap';
+import { Nav, Container, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 
 import './App.css';
 
+
+// TODO if network or accaunt changed cantract should update but nothing happend
 export default function App() {
   const name = useRef<string>('')
   const image = useRef<string>('')
@@ -16,7 +18,9 @@ export default function App() {
   const [myContract, setMyContract] = useState<any>()
   const [isNeedSchool, setIsNeedSchool] = useState<boolean>(false)
   const [validated, setValidated] = useState(false);
+  const [isSent, setIsSent] = useState<boolean>(false)
   const firstRender = useRef(false);
+
   async function init() {
     let provider = window.ethereum
     if (provider) {
@@ -56,12 +60,6 @@ export default function App() {
     });
     initialize.current = true
   }
-  useEffect(() => {
-    if (!initialize.current) { init() }
-    if (firstRender) {
-      fetchData()
-    }
-  })
 
   const fetchData = useCallback(() => {
     async function createStudent(name: string, IPFShash: string) {
@@ -94,6 +92,7 @@ export default function App() {
     }
     async function fetchToWeb3() {
       try {
+        setIsSent(true)
         if (useCase.current === "student") {
           await createStudent(name.current, image.current)
           const result = await fetchStudent()
@@ -114,8 +113,10 @@ export default function App() {
           const result = await fetchCertificate()
           console.log('fetchCertificate', result);
         }
+        setIsSent(false)
       } catch (err) {
         console.error(err);
+        setIsSent(false)
       }
     }
     if (validated) {
@@ -125,6 +126,13 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [validated])
 
+  useEffect(() => {
+    if (!initialize.current) { init() }
+    if (firstRender) {
+      fetchData()
+    }
+  })
+
   function handleSubmit(event: any) {
     event.preventDefault();
     const form = event.currentTarget;
@@ -132,7 +140,6 @@ export default function App() {
 
       event.stopPropagation();
     }
-    console.log("Validated", useCase.current, name.current, image.current);
 
     setValidated(true);
     useCase.current = event.target.useCase.value
@@ -156,7 +163,7 @@ export default function App() {
             <Form.Select
               aria-label="Floating label select example"
               required
-              id = "useCase"
+              id="useCase"
               onChange={(e) => {
                 console.log(e.target.value)
                 e.target.value === "course" || e.target.value === "certificate" ? setIsNeedSchool(true) : setIsNeedSchool(false)
@@ -180,9 +187,21 @@ export default function App() {
             <Form.Label>image</Form.Label>
             <Form.Control type="name" placeholder="Enter image" />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+          {!isSent ?
+            <Button variant="primary" type="submit">
+              Submit
+            </Button> :
+            <Button variant="primary" disabled>
+              <Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              Loading...
+            </Button>
+          }
         </Form>
       </Container>
     </div>
