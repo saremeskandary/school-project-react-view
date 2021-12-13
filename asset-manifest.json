@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/school-project-react-view/static/css/main.106baaae.chunk.css",
+    "main.js": "/school-project-react-view/static/js/main.d4041718.chunk.js",
+    "main.js.map": "/school-project-react-view/static/js/main.d4041718.chunk.js.map",
+    "runtime-main.js": "/school-project-react-view/static/js/runtime-main.4a21f804.js",
+    "runtime-main.js.map": "/school-project-react-view/static/js/runtime-main.4a21f804.js.map",
+    "static/css/2.4659568d.chunk.css": "/school-project-react-view/static/css/2.4659568d.chunk.css",
+    "static/js/2.2f9cdc02.chunk.js": "/school-project-react-view/static/js/2.2f9cdc02.chunk.js",
+    "static/js/2.2f9cdc02.chunk.js.map": "/school-project-react-view/static/js/2.2f9cdc02.chunk.js.map",
+    "static/js/3.ee6d5520.chunk.js": "/school-project-react-view/static/js/3.ee6d5520.chunk.js",
+    "static/js/3.ee6d5520.chunk.js.map": "/school-project-react-view/static/js/3.ee6d5520.chunk.js.map",
+    "index.html": "/school-project-react-view/index.html",
+    "static/css/2.4659568d.chunk.css.map": "/school-project-react-view/static/css/2.4659568d.chunk.css.map",
+    "static/css/main.106baaae.chunk.css.map": "/school-project-react-view/static/css/main.106baaae.chunk.css.map",
+    "static/js/2.2f9cdc02.chunk.js.LICENSE.txt": "/school-project-react-view/static/js/2.2f9cdc02.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4a21f804.js",
+    "static/css/2.4659568d.chunk.css",
+    "static/js/2.2f9cdc02.chunk.js",
+    "static/css/main.106baaae.chunk.css",
+    "static/js/main.d4041718.chunk.js"
+  ]
+}
